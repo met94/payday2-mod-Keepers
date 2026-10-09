@@ -97,7 +97,7 @@ function CopLogicIdle.clbk_action_timeout(ignore_this, data)
 
 	my_data.action_expired = true
 	local anim_data = data.unit:anim_data()
-	if anim_data.act and anim_data.needs_idle then
+	if anim_data.act and anim_data.needs_idle and not anim_data.to_idle then
 		CopLogicIdle._start_idle_action_from_act(data)
 	end
 
