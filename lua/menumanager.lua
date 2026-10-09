@@ -1105,7 +1105,7 @@ function Keepers:calc_distance_to_interaction_possibilities(possibilities, bot_u
 			start_i_seg = start_i_seg,
 			seg_searched = {},
 			discovered_seg = {[start_i_seg] = true},
-			seg_to_search = {{i_seg = start_i_seg}},
+			seg_to_search = {{i_seg = start_i_seg, pos = bot_unit:movement():m_pos()}},
 			access_pos = bot_unit:brain()._SO_access
 		}
 
@@ -1119,7 +1119,15 @@ function Keepers:calc_distance_to_interaction_possibilities(possibilities, bot_u
 
 				local path = managers.navigation:_execute_coarce_search(search_data)
 				if path then
-					possibility.dis = path.coarse_dis
+					local dis = 0
+					for j = 2, #path do
+						local a, b = path[j - 1][2], path[j][2]
+						if a and b then
+							dis = dis + mvec3_dis(a, b)
+						end
+					end
+
+					possibility.dis = dis
 				else
 					table.remove(possibilities, i)
 				end
