@@ -1100,22 +1100,22 @@ function Keepers:calc_distance_to_interaction_possibilities(possibilities, bot_u
 
 	if multiseg then
 		local start_i_seg = bot_unit:movement():nav_tracker():nav_segment()
-		local search_data = {
-			bypass_congestion = true,
-			start_i_seg = start_i_seg,
-			seg_searched = {},
-			discovered_seg = {[start_i_seg] = true},
-			seg_to_search = {{i_seg = start_i_seg, pos = bot_unit:movement():m_pos()}},
-			access_pos = bot_unit:brain()._SO_access
-		}
 
 		for i = #possibilities, 1, -1 do
 			local possibility = possibilities[i]
 			if start_i_seg == possibility.navseg then
 				possibility.dis = 0
 			else
-				search_data.end_i_seg = possibility.navseg
-				search_data.to_pos = possibility.ground_pos
+				local search_data = {
+					bypass_congestion = true,
+					start_i_seg = start_i_seg,
+					seg_searched = {},
+					discovered_seg = {[start_i_seg] = true},
+					seg_to_search = {{i_seg = start_i_seg, pos = bot_unit:movement():m_pos()}},
+					end_i_seg = possibility.navseg,
+					to_pos = possibility.ground_pos,
+					access_pos = bot_unit:brain()._SO_access
+				}
 
 				local path = managers.navigation:_execute_coarce_search(search_data)
 				if path then
