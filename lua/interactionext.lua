@@ -27,11 +27,13 @@ function CarryInteractionExt:interact(player)
 	if not player:movement():carrying_bag() then
 		CarryInteractionExt.super.super.interact(self, player)
 
-		managers.network:session():send_to_peers_synched_except(1, 'sync_interacted', self._unit, player:id(), self.tweak_data, 1)
+		local carry_data = self._unit:carry_data()
+		local carry_id = carry_data:carry_id()
+
+		managers.network:session():send_to_peers_synched('sync_carry_interacted', self._unit, self._unit:id(), self.tweak_data, carry_id)
 		self:sync_interacted(nil, player)
 
-		local carry_data = self._unit:carry_data()
-		local unit_name = tweak_data.carry[carry_data:carry_id()].unit or 'units/payday2/pickups/gen_pku_lootbag/gen_pku_lootbag'
+		local unit_name = tweak_data.carry[carry_id].unit or 'units/payday2/pickups/gen_pku_lootbag/gen_pku_lootbag'
 		local unit = World:spawn_unit(Idstring(unit_name), self:interact_position(), Rotation())
 
 		managers.network:session():send_to_peers_synched('sync_carry_data', unit, carry_data._carry_id, 1, carry_data._dye_initiated, carry_data._has_dye_pack, carry_data._dye_value_multiplier, self:interact_position(), Vector3(), 0, nil, 0)
