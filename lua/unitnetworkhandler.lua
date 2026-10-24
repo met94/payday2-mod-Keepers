@@ -17,9 +17,9 @@ function UnitNetworkHandler:mark_minion(unit, minion_owner_peer_id, convert_enem
 end
 
 local kpr_original_unitnetworkhandler_hostagetrade = UnitNetworkHandler.hostage_trade
-function UnitNetworkHandler:hostage_trade(unit, enable, trade_success, skip_hint)
+function UnitNetworkHandler:hostage_trade(unit, enable, trade_success, ...)
 	Keepers:destroy_label(unit)
-	kpr_original_unitnetworkhandler_hostagetrade(self, unit, enable, trade_success, skip_hint)
+	kpr_original_unitnetworkhandler_hostagetrade(self, unit, enable, trade_success, ...)
 end
 
 if Network:is_client() then

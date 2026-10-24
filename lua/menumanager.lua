@@ -1084,6 +1084,22 @@ function Keepers.is_crappy_pos(pos) -- remember scarface painting
 	return World:raycast('ray', pos1, pos2, 'slot_mask', managers.interaction._slotmask_interaction_obstruction, 'report')
 end
 
+-- vanilla's _execute_coarce_search doesn't provide coarse_dis (Iter's old override added it)
+local function _coarse_path_dis(path, from_pos)
+	local all_segs = managers.navigation:get_all_nav_segments()
+	local dis = 0
+	local prev_pos = from_pos
+	for _, step in ipairs(path) do
+		local seg = all_segs[step[1]]
+		local pos = step[2] or seg and seg.pos
+		if pos then
+			dis = dis + mvec3_dis(prev_pos, pos)
+			prev_pos = pos
+		end
+	end
+	return dis
+end
+
 function Keepers:calc_distance_to_interaction_possibilities(possibilities, bot_unit)
 	if not possibilities[1] or not alive(bot_unit) then
 		return
@@ -1100,34 +1116,29 @@ function Keepers:calc_distance_to_interaction_possibilities(possibilities, bot_u
 
 	if multiseg then
 		local start_i_seg = bot_unit:movement():nav_tracker():nav_segment()
+		local access_pos = bot_unit:brain()._SO_access
 
 		for i = #possibilities, 1, -1 do
 			local possibility = possibilities[i]
 			if start_i_seg == possibility.navseg then
 				possibility.dis = 0
 			else
+				-- vanilla's search consumes its search data, so each search gets its own
 				local search_data = {
 					bypass_congestion = true,
 					start_i_seg = start_i_seg,
-					seg_searched = {},
-					discovered_seg = {[start_i_seg] = true},
-					seg_to_search = {{i_seg = start_i_seg, pos = bot_unit:movement():m_pos()}},
 					end_i_seg = possibility.navseg,
 					to_pos = possibility.ground_pos,
-					access_pos = bot_unit:brain()._SO_access
+					seg_searched = {},
+					discovered_seg = {[start_i_seg] = true},
+					seg_to_search = {{i_seg = start_i_seg}},
+					access_pos = access_pos,
+					access_neg = 0
 				}
 
 				local path = managers.navigation:_execute_coarce_search(search_data)
 				if path then
-					local dis = 0
-					for j = 2, #path do
-						local a, b = path[j - 1][2], path[j][2]
-						if a and b then
-							dis = dis + mvec3_dis(a, b)
-						end
-					end
-
-					possibility.dis = dis
+					possibility.dis = path.coarse_dis or _coarse_path_dis(path, bot_unit:position())
 				else
 					table.remove(possibilities, i)
 				end

@@ -1,3 +1,15 @@
+Revision 239:
+- fixed the coarse path distance to interaction positions without Iter's pathing: each search gets its own search data (the game's search consumes it) [courtesy of BangL]
+
+Revision 238:
+- restored itr_direct_to_pos (direct paths to the keep position work again when Iter r203 is installed, it is optional) [courtesy of BangL]
+
+Revision 237:
+- removed dependency on Iter and its pathing hooks (itr_direct_to_pos) [courtesy of BangL]
+- added own coarse path distance calculation as Iter no longer adds coarse_dis [courtesy of BangL]
+- fixed idle action restarting while the animation is already going back to idle [courtesy of BangL]
+- fixed hostage_trade not forwarding additional parameters [courtesy of BangL]
+
 Revision 236:
 - updated U240.3 action_act_start proto
 
