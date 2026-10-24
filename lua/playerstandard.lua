@@ -48,7 +48,7 @@ local unit_type_teammate = 2
 local unit_type_minion = 22
 
 local kpr_original_playerstandard_getinteractiontarget = PlayerStandard._get_interaction_target
-function PlayerStandard:_get_interaction_target(char_table, my_head_pos, cam_fwd)
+function PlayerStandard:_get_interaction_target(char_table, my_head_pos, cam_fwd, secondary)
 	if Keepers.enabled then
 		if not self.kpr_secondary and Keepers.settings.filter_shout_at_teamai and not Keepers:is_filter_key_pressed() then
 			for i = #char_table, 1, -1 do
@@ -77,7 +77,7 @@ function PlayerStandard:_get_interaction_target(char_table, my_head_pos, cam_fwd
 		end
 	end
 
-	return kpr_original_playerstandard_getinteractiontarget(self, char_table, my_head_pos, cam_fwd)
+	return kpr_original_playerstandard_getinteractiontarget(self, char_table, my_head_pos, cam_fwd, secondary)
 end
 
 local kpr_original_playerstandard_getintimidationaction = PlayerStandard._get_intimidation_action
