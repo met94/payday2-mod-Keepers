@@ -3,6 +3,7 @@ Revision 239.1:
 - fixed inspire and long-distance revive targeting (the secondary parameter of interaction targeting was dropped)
 - fixed multiplayer sync when a bot picks up a bag
 - dropped a redundant debug toggle when registering covers
+- auto-updates now come from this fork's GitHub releases instead of the upstream feed
 Player notes: keepers keep their orders and interactions as before. In co-op, bags picked up by bots now sync correctly for every player, inspire/revive shouts no longer leak into team-AI shout filtering, bots no longer stutter an idle animation that is already ending, and Iter is no longer required.
 
 Revision 239:
