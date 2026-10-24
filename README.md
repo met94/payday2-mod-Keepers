@@ -1,7 +1,7 @@
 # Keepers
 
 Issue orders to your AI teammates and jokers - a community-maintained fork of
-TdlQ's [Keepers](http://pd2mods.z77.fr/keepers.html), kept working on
+TdlQ's [Keepers](http://pd2mods.z77.fr/keepers.html), updated for
 **PAYDAY 2 248.2** (64-bit, SuperBLT).
 
 The mod keeps the original name, options, localization and player-facing
@@ -14,6 +14,8 @@ upstream r239 does not carry.
 - Upstream: TdlQ (original author), BangL (r237-r239 maintenance).
 - This repository: fork maintenance by met94.
 - Base: upstream r239; first fork release 239.1.
+- Verification: static compatibility checks against the 248.2 game Lua; an
+  in-game smoke test is still pending.
 - Auto-updates come from this repository's GitHub releases, not from
   `pd2mods.z77.fr`. The upstream feed serves the unpatched r239 package and
   would overwrite the fork's fixes.
@@ -48,7 +50,7 @@ See [MENU_OPTIONS.md](MENU_OPTIONS.md) for every option and mode.
 - No Duplicated Bullets.
 
 Simple Mod Updater is optional. When present it can install the declared
-dependencies and check this repository's releases for updates.
+dependencies; version checks use SuperBLT's own update provider.
 
 ## Installation
 
@@ -140,7 +142,9 @@ against the matching 248.2 game file.
 Release checklist: bump `version` in `mod.txt`, prepend a `Revision N:` block to
 `changelog.txt` (newest first, ending with `Player notes:`), build a zip whose
 single root folder is `Keepers`, and publish it with a `meta.json` asset from a
-release tagged `v<version>`.
+release tagged `v<version>`. The asset is an array containing `ident`
+(`Keepers`), `version` (must equal `mod.txt`), `download_url` and optionally
+`patchnotes_url`.
 
 ## Credits
 

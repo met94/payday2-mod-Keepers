@@ -2,8 +2,10 @@
 
 **Where:** Mod Options (SuperBLT) -> **Keepers**.
 
-Settings are saved to `...\PAYDAY 2\mods\saves\keepers.txt`. Most changes apply
-live; a few (keybinds) may need the options menu to be reopened.
+Settings are saved to `...\PAYDAY 2\mods\saves\keepers.txt`. Keybinds apply
+immediately. The "TeamAIs can do interactions" toggle is read when a bot is
+initialised, so changing it mid-heist takes effect after the bot respawns or
+re-initialises.
 
 ## Order modes
 
@@ -65,7 +67,8 @@ chunks and the grace period is reduced.
 ### Faster but weaker while carrying
 
 Halves the movement penalty while carrying a heavy bag, but also reduces the
-regeneration rate. See the regeneration table below.
+regeneration rate. Both effects require "TeamAIs can do interactions"; with that
+option off, this toggle does nothing. See the regeneration table below.
 
 ### Interaction timer multiplier
 
@@ -113,7 +116,8 @@ remove the waypoint.
 ## Regeneration trade-offs
 
 The interaction features reduce bot survivability on purpose. Regeneration per
-event, by option combination:
+event, by option combination (the last two columns apply only while "TeamAIs can
+do interactions" is enabled):
 
 | Objective | Vanilla | TeamAIs can do interactions | Faster but weaker while carrying |
 | --- | --- | --- | --- |
