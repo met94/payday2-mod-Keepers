@@ -1,3 +1,10 @@
+Revision 239.1:
+- merged upstream r237-r239 (code maintenance by BangL): no more Iter requirement, own coarse path distance to interaction positions, idle animation no longer restarts while it is already going back to idle, hostage trade forwards additional parameters, direct paths to keep positions work again with optional Iter r203
+- fixed inspire and long-distance revive targeting (the secondary parameter of interaction targeting was dropped)
+- fixed multiplayer sync when a bot picks up a bag
+- dropped a redundant debug toggle when registering covers
+Player notes: keepers keep their orders and interactions as before. In co-op, bags picked up by bots now sync correctly for every player, inspire/revive shouts no longer leak into team-AI shout filtering, bots no longer stutter an idle animation that is already ending, and Iter is no longer required.
+
 Revision 239:
 - fixed the coarse path distance to interaction positions without Iter's pathing: each search gets its own search data (the game's search consumes it) [courtesy of BangL]
 
